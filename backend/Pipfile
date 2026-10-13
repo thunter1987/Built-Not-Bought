@@ -4,6 +4,19 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+sqlalchemy = "*"
+alembic = "*"
+pydantic = "*"
+pydantic-settings = "*"
+email-validator = "*"
+argon2-cffi = "*"
+pyjwt = "*"
+python-multipart = "*"
+httpx = "*"
+pytest = "*"
+fastapi = {extras = ["standard"], version = "*"}
+uvicorn = {extras = ["standard"], version = "*"}
+psycopg = {extras = ["binary"], version = "*"}
 
 [dev-packages]
 
