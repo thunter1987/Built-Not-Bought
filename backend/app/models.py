@@ -187,6 +187,11 @@ class Car(Base):
         cascade="all, delete-orphan",
     )
 
+    fuel_type: Mapped[Optional[str]] = mapped_column(
+        String(40),
+        nullable=True,
+    )
+
     __table_args__ = (Index("ix_cars_make_model", "make", "model"),)
 
 
