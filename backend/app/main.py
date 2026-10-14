@@ -1,12 +1,12 @@
 from contextlib import asynccontextmanager
 
+from app.api.auth import router as auth_router
+from app.config import settings
+from app.database import get_db
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.orm import Session
-
-from app.config import settings
-from app.database import get_db
 
 
 @asynccontextmanager
@@ -28,7 +28,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
+app.include_router(
+    auth_router,
+    prefix="/api/v1",
+)
 @app.get("/")
 def root():
     return {
