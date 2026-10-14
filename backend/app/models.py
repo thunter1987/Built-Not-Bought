@@ -192,6 +192,12 @@ class Car(Base):
         nullable=True,
     )
 
+    photos: Mapped[list["CarPhoto"]] = relationship(
+        back_populates="car",
+        cascade="all, delete-orphan",
+        order_by="CarPhoto.created_at",
+    )
+
     __table_args__ = (Index("ix_cars_make_model", "make", "model"),)
 
 
@@ -344,4 +350,56 @@ class PerformanceLog(Base):
 
     __table_args__ = (
         Index("ix_performance_logs_car_occurred", "car_id", "occurred_at"),
+    )
+
+
+class CarPhoto(Base):
+    __tablename__ = "car_photos"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+
+    car_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("cars.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    original_filename: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
+    )
+
+    storage_path: Mapped[str] = mapped_column(
+        String(500),
+        nullable=False,
+        unique=True,
+    )
+
+    url_path: Mapped[str] = mapped_column(
+        String(500),
+        nullable=False,
+    )
+
+    content_type: Mapped[str] = mapped_column(
+        String(100),
+        nullable=False,
+    )
+    size_bytes: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+    )
+    
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False,
+    )
+    
+    car: Mapped["Car"] = relationship(
+        back_populates="photos",
     )

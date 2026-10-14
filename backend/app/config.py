@@ -10,6 +10,9 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 60
 
     cors_origins: str = "http://localhost:5173"
+    
+    upload_dir: str = "storage/local"
+    max_upload_size_mb: int = 5
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -22,6 +25,8 @@ class Settings(BaseSettings):
         return [
             origin.strip() for origin in self.cors_origins.split(",") if origin.strip()
         ]
-
+    @property
+    def max_upload_size_bytes(self) -> int:
+        return self.max_upload_size_mb * 1024 * 1024
 
 settings = Settings()

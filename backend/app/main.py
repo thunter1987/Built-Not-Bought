@@ -1,16 +1,23 @@
 from contextlib import asynccontextmanager
-
+from pathlib import Path
 from app.api.auth import router as auth_router
 from app.config import settings
 from app.database import get_db
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import text
 from sqlalchemy.orm import Session
+from app.api.cars import router as cars_router
+from app.api.photos import router as photos_router
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    Path(settings.upload_dir).mkdir(
+        parents=True,
+        exist_ok=True,
+    )
     yield
 
 
@@ -32,6 +39,29 @@ app.include_router(
     auth_router,
     prefix="/api/v1",
 )
+
+app.include_router(
+    cars_router,
+    prefix="/api/v1",
+)
+
+app.include_router(
+    photos_router,
+    prefix="/api/v1",
+)
+
+Path(settings.upload_dir).mkdir(
+    parents=true,
+    exist_ok=True,
+)
+
+app.mount(
+    "/media",
+    StaticFiles(directory=settings.upload_dir),
+    name="media",
+)
+
+
 @app.get("/")
 def root():
     return {
