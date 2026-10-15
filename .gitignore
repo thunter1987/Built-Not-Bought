@@ -32,3 +32,6 @@ htmlcov/
 
 # Docker
 postgres_data/
+
+# Uploaded media
+backend/storage

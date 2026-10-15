@@ -51,7 +51,7 @@ app.include_router(
 )
 
 Path(settings.upload_dir).mkdir(
-    parents=true,
+    parents=True,
     exist_ok=True,
 )
 
