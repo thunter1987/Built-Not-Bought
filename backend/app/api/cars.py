@@ -58,15 +58,16 @@ def create_car(
 
 @router.get(
     "",
-    response_model=list[CarOut],
+    response_model=list[CarDetail],
 )
 def list_cars(
     db: Session = Depends(get_db),
-    curremt_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
 ):
     statement = (
         select(Car)
-        .where(Car.owner_id == curremt_user.id)
+        .options(selectinload(Car.photos))
+        .where(Car.owner_id == current_user.id)
         .order_by(Car.created_at.desc())
     )
 

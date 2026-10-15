@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional
 from uuid import UUID
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
-from app.models import Drivetrain, Transmission
+from app.models import CarDiscipline, CarStatus, Drivetrain, Transmission
 
 
 class UserCreate(BaseModel):
@@ -84,6 +84,10 @@ class CarCreate(BaseModel):
     specs: dict = Field(
         default_factory=dict,
     )
+    status: Optional[CarStatus] = CarStatus.PROJECT
+    discipline: Optional[CarDiscipline] = None
+    description: Optional[str] = Field(default=None, max_length=2000)
+    goals: Optional[str] = Field(default=None, max_length=1000)
 
 
 class CarUpdate(BaseModel):
@@ -130,6 +134,10 @@ class CarUpdate(BaseModel):
         le=5000,
     )
     specs: Optional[dict] = None
+    status: Optional[CarStatus] = None
+    discipline: Optional[CarDiscipline] = None
+    description: Optional[str] = Field(default=None, max_length=2000)
+    goals: Optional[str] = Field(default=None, max_length=1000)
 
 
 class CarPhotoOut(BaseModel):
@@ -163,6 +171,10 @@ class CarOut(BaseModel):
     specs: dict
     created_at: datetime
     updated_at: datetime
+    status: Optional[CarStatus]
+    discipline: Optional[CarDiscipline]
+    description: Optional[str]
+    goals: Optional[str]
 
     model_config = ConfigDict(
         from_attributes=True,

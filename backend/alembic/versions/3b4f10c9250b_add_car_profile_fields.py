@@ -1,8 +1,8 @@
-"""initial tables created
+"""add car profile fields
 
-Revision ID: 42116afced6d
+Revision ID: 3b4f10c9250b
 Revises: 
-Create Date: 2026-10-14 10:54:34.551604
+Create Date: 2026-10-15 16:08:33.705083
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision: str = '42116afced6d'
+revision: str = '3b4f10c9250b'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -39,6 +39,10 @@ def upgrade() -> None:
     sa.Column('make', sa.String(length=80), nullable=False),
     sa.Column('model', sa.String(length=120), nullable=False),
     sa.Column('trim', sa.String(length=120), nullable=True),
+    sa.Column('status', sa.Enum('PROJECT', 'STREET', 'TRACK', 'SHOW', 'SOLD', name='carstatus'), nullable=True),
+    sa.Column('discipline', sa.Enum('STREET', 'TIME_ATTACK', 'TRACK', 'DRAG', 'DRIFT', 'RALLY', 'CANYON', 'SHOW', name='cardiscipline'), nullable=True),
+    sa.Column('description', sa.Text(), nullable=True),
+    sa.Column('goals', sa.Text(), nullable=True),
     sa.Column('engine_code', sa.String(length=40), nullable=True),
     sa.Column('drivetrain', sa.Enum('FWD', 'RWD', 'AWD', name='drivetrain'), nullable=True),
     sa.Column('transmission', sa.Enum('MANUAL', 'AUTOMATIC', 'DCT', 'CVT', name='transmission'), nullable=True),
@@ -48,6 +52,7 @@ def upgrade() -> None:
     sa.Column('specs', postgresql.JSONB(astext_type=sa.Text()), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.Column('fuel_type', sa.String(length=40), nullable=True),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
@@ -55,6 +60,20 @@ def upgrade() -> None:
     op.create_index('ix_cars_make_model', 'cars', ['make', 'model'], unique=False)
     op.create_index(op.f('ix_cars_model'), 'cars', ['model'], unique=False)
     op.create_index(op.f('ix_cars_owner_id'), 'cars', ['owner_id'], unique=False)
+    op.create_table('car_photos',
+    sa.Column('id', sa.UUID(), nullable=False),
+    sa.Column('car_id', sa.UUID(), nullable=False),
+    sa.Column('original_filename', sa.String(length=255), nullable=False),
+    sa.Column('storage_path', sa.String(length=500), nullable=False),
+    sa.Column('url_path', sa.String(length=500), nullable=False),
+    sa.Column('content_type', sa.String(length=100), nullable=False),
+    sa.Column('size_bytes', sa.Integer(), nullable=False),
+    sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.ForeignKeyConstraint(['car_id'], ['cars.id'], ondelete='CASCADE'),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('storage_path')
+    )
+    op.create_index(op.f('ix_car_photos_car_id'), 'car_photos', ['car_id'], unique=False)
     op.create_table('modifications',
     sa.Column('id', sa.UUID(), nullable=False),
     sa.Column('car_id', sa.UUID(), nullable=False),
@@ -103,6 +122,8 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_modifications_car_id'), table_name='modifications')
     op.drop_index('ix_modifications_car_category', table_name='modifications')
     op.drop_table('modifications')
+    op.drop_index(op.f('ix_car_photos_car_id'), table_name='car_photos')
+    op.drop_table('car_photos')
     op.drop_index(op.f('ix_cars_owner_id'), table_name='cars')
     op.drop_index(op.f('ix_cars_model'), table_name='cars')
     op.drop_index('ix_cars_make_model', table_name='cars')

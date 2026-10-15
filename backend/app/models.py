@@ -28,17 +28,17 @@ class Drivetrain(str, enum.Enum):
 
 
 class Transmission(str, enum.Enum):
-    MANUAL = "manual"
-    AUTOMATIC = "automatic"
-    DCT = "dct"
-    CVT = "cvt"
+    MANUAL = "MANUAL"
+    AUTOMATIC = "AUTOMATIC"
+    DCT = "DCT"
+    CVT = "CVT"
 
 
 class PerformanceLogType(str, enum.Enum):
-    DYNO = "dyno"
-    ACCELERATION = "acceleration"
-    TRACK = "track"
-    BRAKING = "braking"
+    DYNO = "DYNO"
+    ACCELERATION = "ACCELERATION"
+    TRACK = "TRACK"
+    BRAKING = "BRAKING"
 
 
 class User(Base):
@@ -81,6 +81,25 @@ class User(Base):
     )
 
 
+class CarStatus(str, enum.Enum):
+    PROJECT = "PROJECT"
+    STREET = "STREET"
+    TRACK = "TRACK"
+    SHOW = "SHOW"
+    SOLD = "SOLD"
+
+
+class CarDiscipline(str, enum.Enum):
+    STREET = "STREET"
+    TIME_ATTACK = "TIME_ATTACK"
+    TRACK = "TRACK"
+    DRAG = "DRAG"
+    DRIFT = "DRIFT"
+    RALLY = "RALLY"
+    CANYON = "CANYON"
+    SHOW = "SHOW"
+
+
 class Car(Base):
     __tablename__ = "cars"
 
@@ -121,6 +140,27 @@ class Car(Base):
 
     trim: Mapped[Optional[str]] = mapped_column(
         String(120),
+        nullable=True,
+    )
+
+    status: Mapped[Optional[CarStatus]] = mapped_column(
+        Enum(CarStatus, name="carstatus"),
+        nullable=True,
+        default=CarStatus.PROJECT,
+    )
+
+    discipline: Mapped[Optional[CarDiscipline]] = mapped_column(
+        Enum(CarDiscipline, name="cardiscipline"),
+        nullable=True,
+    )
+
+    description: Mapped[Optional[str]] = mapped_column(
+        Text,
+        nullable=True,
+    )
+
+    goals: Mapped[Optional[str]] = mapped_column(
+        Text,
         nullable=True,
     )
 
@@ -393,13 +433,13 @@ class CarPhoto(Base):
         Integer,
         nullable=False,
     )
-    
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
         nullable=False,
     )
-    
+
     car: Mapped["Car"] = relationship(
         back_populates="photos",
     )
