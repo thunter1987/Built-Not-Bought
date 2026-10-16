@@ -10,6 +10,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 from app.api.cars import router as cars_router
 from app.api.photos import router as photos_router
+from app.api.modifications import router as modifications_router
 
 
 @asynccontextmanager
@@ -47,6 +48,11 @@ app.include_router(
 
 app.include_router(
     photos_router,
+    prefix="/api/v1",
+)
+
+app.include_router(
+    modifications_router,
     prefix="/api/v1",
 )
 

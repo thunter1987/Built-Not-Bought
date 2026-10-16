@@ -3,17 +3,19 @@ import type { ChangeEvent } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import CarForm from '../component/cars/CarForm'
-import Badge from '../component/ui/Badge'
-import StatTile from '../component/ui/StatTile'
+import CarForm from '../components/cars/CarForm'
+import Badge from '../components/ui/Badge'
+import StatTile from '../components/ui/StatTile'
+import BuildSheet from '../components/modifications/BuildSheet'
 import { api } from '../lib/api'
 import { formatLapTime, humanizeEnum, powerToWeight } from '../lib/format'
 import type { Car, CarPayload, CarPhoto } from '../lib/types'
 
-type Tab = 'overview' | 'photos' | 'specs'
+type Tab = 'overview' | 'build-sheet' | 'photos' | 'specs'
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'overview', label: 'Overview' },
+  { id: 'build-sheet', label: 'Build Sheet' },
   { id: 'photos', label: 'Photo Gallery' },
   { id: 'specs', label: 'Spec Sheet' },
 ]
@@ -345,6 +347,13 @@ export default function CarDetailPage() {
             </dl>
           </section>
         </div>
+      ) : null}
+
+      {/* Build Sheet */}
+      {tab === 'build-sheet' ? (
+        <section className='mt-6'>
+          <BuildSheet carId={car.id} />
+        </section>
       ) : null}
 
       {/* Photos */}

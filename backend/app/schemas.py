@@ -1,8 +1,15 @@
-from datetime import datetime
+from datetime import datetime, date
 from typing import Optional
 from uuid import UUID
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
-from app.models import CarDiscipline, CarStatus, Drivetrain, Transmission
+from app.models import (
+    CarDiscipline,
+    CarStatus,
+    Drivetrain,
+    Transmission,
+    MODIFICATION_CATEGORIES,
+    MODIFICATION_PURPOSES,
+)
 
 
 class UserCreate(BaseModel):
@@ -183,3 +190,109 @@ class CarOut(BaseModel):
 
 class CarDetail(CarOut):
     photos: list[CarPhotoOut] = []
+
+
+class ModificationCreate(BaseModel):
+    category: str = Field(
+        min_length=1,
+        max_length=80,
+    )
+    purpose: Optional[str] = Field(
+        default=None,
+        max_length=80,
+    )
+    name: str = Field(
+        min_length=1,
+        max_length=160,
+    )
+    brand: Optional[str] = Field(
+        default=None,
+        max_length=120,
+    )
+    cost: Optional[float] = Field(
+        default=None,
+        ge=0,
+        le=1000000,
+    )
+    estimated_hp_gain: Optional[int] = Field(
+        default=None,
+        ge=-1000,
+        le=5000,
+    )
+    expected_result: Optional[str] = Field(
+        default=None,
+        max_length=1000,
+    )
+    actual_result: Optional[str] = Field(
+        default=None,
+        max_length=1000,
+    )
+    installed_at: Optional[date] = None
+    notes: Optional[str] = Field(
+        default=None,
+        max_length=2000,
+    )
+
+
+class ModificationUpdate(BaseModel):
+    category: Optional[str] = Field(
+        default=None,
+        min_length=1,
+        max_length=80,
+    )
+    purpose: Optional[str] = Field(
+        default=None,
+        max_length=80,
+    )
+    name: Optional[str] = Field(
+        default=None,
+        min_length=1,
+        max_length=160,
+    )
+    brand: Optional[str] = Field(
+        default=None,
+        max_length=120,
+    )
+    cost: Optional[float] = Field(
+        default=None,
+        ge=0,
+        le=1000000,
+    )
+    estimated_hp_gain: Optional[int] = Field(
+        default=None,
+        ge=-1000,
+        le=5000,
+    )
+    expected_result: Optional[str] = Field(
+        default=None,
+        max_length=1000,
+    )
+    actual_result: Optional[str] = Field(
+        default=None,
+        max_length=1000,
+    )
+    installed_at: Optional[date] = None
+    notes: Optional[str] = Field(
+        default=None,
+        max_length=2000,
+    )
+
+
+class ModificationOut(BaseModel):
+    id: UUID
+    car_id: UUID
+    category: str
+    purpose: Optional[str]
+    name: str
+    brand: Optional[str]
+    cost: Optional[float]
+    estimated_hp_gain: Optional[int]
+    expected_result: Optional[str]
+    actual_result: Optional[str]
+    installed_at: Optional[date]
+    notes: Optional[str]
+    created_at: datetime
+
+    model_config = ConfigDict(
+        from_attributes=True,
+    )

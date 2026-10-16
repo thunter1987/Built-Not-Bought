@@ -41,6 +41,37 @@ class PerformanceLogType(str, enum.Enum):
     BRAKING = "BRAKING"
 
 
+MODIFICATION_CATEGORIES = [
+    "ENGINE",
+    "TURBO_SUPERCHARGER",
+    "EXHAUST",
+    "INTAKE",
+    "COOLING",
+    "ECU",
+    "SUSPENSION",
+    "BRAKES",
+    "WHEELS",
+    "TIRES",
+    "AERO",
+    "DRIVETRAIN",
+    "INTERIOR_WEIGHT",
+    "RELIABILITY",
+]
+
+MODIFICATION_PURPOSES = [
+    "POWER",
+    "HANDLING",
+    "BRAKING",
+    "WEIGHT_REDUCTION",
+    "COOLING",
+    "RELIABILITY",
+    "SOUND",
+    "AERO",
+    "GRIP",
+    "APPEARANCE",
+]
+
+
 class User(Base):
     __tablename__ = "users"
 
@@ -262,6 +293,11 @@ class Modification(Base):
         nullable=False,
     )
 
+    purpose: Mapped[Optional[str]] = mapped_column(
+        String(80),
+        nullable=True,
+    )
+
     name: Mapped[str] = mapped_column(
         String(160),
         nullable=False,
@@ -279,6 +315,16 @@ class Modification(Base):
 
     estimated_hp_gain: Mapped[Optional[int]] = mapped_column(
         Integer,
+        nullable=True,
+    )
+
+    expected_result: Mapped[Optional[str]] = mapped_column(
+        Text,
+        nullable=True,
+    )
+
+    actual_result: Mapped[Optional[str]] = mapped_column(
+        Text,
         nullable=True,
     )
 

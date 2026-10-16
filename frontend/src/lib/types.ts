@@ -62,6 +62,35 @@ export type Car = {
   photos?: CarPhoto[]
 }
 
+export type Modification = {
+  id: string
+  car_id: string
+  category: string
+  purpose?: string | null
+  name: string
+  brand?: string | null
+  cost?: number | null
+  estimated_hp_gain?: number | null
+  expected_result?: string | null
+  actual_result?: string | null
+  installed_at?: string | null
+  notes?: string | null
+  created_at: string
+}
+
+export type ModificationPayload = {
+  category: string
+  purpose?: string
+  name: string
+  brand?: string
+  cost?: number
+  estimated_hp_gain?: number
+  expected_result?: string
+  actual_result?: string
+  installed_at?: string
+  notes?: string
+}
+
 export type CarPayload = {
   nickname?: string
   year: number
