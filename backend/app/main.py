@@ -12,6 +12,7 @@ from app.api.cars import router as cars_router
 from app.api.photos import router as photos_router
 from app.api.modifications import router as modifications_router
 from app.api.performance_logs import router as performance_logs_router
+from app.api.analytics import router as analytics_router
 
 
 @asynccontextmanager
@@ -61,7 +62,10 @@ app.include_router(
     performance_logs_router,
     prefix="/api/v1",
 )
-
+app.include_router(
+    analytics_router,
+    prefix="/api/v1",
+)
 Path(settings.upload_dir).mkdir(
     parents=True,
     exist_ok=True,

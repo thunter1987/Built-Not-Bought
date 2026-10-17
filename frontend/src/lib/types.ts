@@ -190,3 +190,65 @@ export type PerformanceLogPayload = {
   notes?: string
   data?: Record<string, unknown>
 }
+export type PowerProgressionPoint = {
+  date: string
+  hp: number
+  label: string
+  point_type: 'baseline' | 'mod' | 'dyno'
+}
+
+export type LapProgressionPoint = {
+  date: string
+  lap_time: number
+  track: string
+}
+
+export type AccelerationProgressionPoint = {
+  date: string
+  zero_to_sixty: number
+  quarter_mile: number | null
+  trap_mph: number | null
+}
+
+export type CostCategoryBreakdown = {
+  category: string
+  cost: number
+  count: number
+  hp_gain: number
+}
+
+export type CostAnalysis = {
+  total_cost: number
+  total_estimated_hp_gain: number
+  cost_per_hp: number | null
+  mod_count: number
+  by_category: CostCategoryBreakdown[]
+}
+
+export type BestStats = {
+  best_hp: number | null
+  best_torque: number | null
+  best_zero_to_sixty: number | null
+  best_quarter_mile: number | null
+  best_lap: number | null
+  best_braking: number | null
+}
+
+export type StockVsCurrent = {
+  stock_hp: number | null
+  current_hp: number | null
+  hp_gain: number | null
+  stock_weight: number | null
+  current_weight: number | null
+  stock_power_to_weight: number | null
+  current_power_to_weight: number | null
+}
+
+export type CarAnalytics = {
+  best_stats: BestStats
+  stock_vs_current: StockVsCurrent
+  cost_analysis: CostAnalysis
+  power_progression: PowerProgressionPoint[]
+  lap_progression: Record<string, LapProgressionPoint[]>
+  acceleration_progression: AccelerationProgressionPoint[]
+}

@@ -8,14 +8,22 @@ import Badge from '../components/ui/Badge'
 import StatTile from '../components/ui/StatTile'
 import BuildSheet from '../components/modifications/BuildSheet'
 import SessionList from '../components/sessions/SessionList'
+import AnalyticsPanel from '../components/analytics/AnalyticsPanel'
 import { api } from '../lib/api'
 import { formatLapTime, humanizeEnum, powerToWeight } from '../lib/format'
 import type { Car, CarPayload, CarPhoto } from '../lib/types'
 
-type Tab = 'overview' | 'build-sheet' | 'sessions' | 'photos' | 'specs'
+type Tab =
+  | 'overview'
+  | 'analytics'
+  | 'build-sheet'
+  | 'sessions'
+  | 'photos'
+  | 'specs'
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'overview', label: 'Overview' },
+  { id: 'analytics', label: 'Analytics' },
   { id: 'build-sheet', label: 'Build Sheet' },
   { id: 'sessions', label: 'Sessions' },
   { id: 'photos', label: 'Photo Gallery' },
@@ -349,6 +357,13 @@ export default function CarDetailPage() {
             </dl>
           </section>
         </div>
+      ) : null}
+
+      {/* Analytics */}
+      {tab === 'analytics' ? (
+        <section className='mt-6'>
+          <AnalyticsPanel carId={car.id} />
+        </section>
       ) : null}
 
       {/* Build Sheet */}
