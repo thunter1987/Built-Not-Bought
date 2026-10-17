@@ -403,13 +403,59 @@ class PerformanceLog(Base):
         nullable=True,
     )
 
+    sixty_to_zero_ft: Mapped[Optional[float]] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
     lap_time_sec: Mapped[Optional[float]] = mapped_column(
         Float,
         nullable=True,
     )
 
+    temperature_f: Mapped[Optional[int]] = mapped_column(
+        Integer,
+        nullable=True,
+    )
+
+    humidity_percent: Mapped[Optional[int]] = mapped_column(
+        Integer,
+        nullable=True,
+    )
+
+    fuel_octane: Mapped[Optional[int]] = mapped_column(
+        Integer,
+        nullable=True,
+    )
+
+    tire_setup: Mapped[Optional[str]] = mapped_column(
+        String(200),
+        nullable=True,
+    )
+
+    tire_pressure_front_psi: Mapped[Optional[float]] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    tire_pressure_rear_psi: Mapped[Optional[float]] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    # Location and context
     location: Mapped[Optional[str]] = mapped_column(
         String(160),
+        nullable=True,
+    )
+
+    track_name: Mapped[Optional[str]] = mapped_column(
+        String(160),
+        nullable=True,
+    )
+
+    track_layout: Mapped[Optional[str]] = mapped_column(
+        String(80),
         nullable=True,
     )
 
@@ -418,6 +464,7 @@ class PerformanceLog(Base):
         nullable=True,
     )
 
+    # Flexible data for session-specific details
     data: Mapped[dict] = mapped_column(
         JSONB,
         nullable=False,
@@ -432,6 +479,12 @@ class PerformanceLog(Base):
 
     car: Mapped["Car"] = relationship(
         back_populates="performance_logs",
+    )
+
+    photos: Mapped[list["PerformanceLogPhoto"]] = relationship(
+        back_populates="performance_log",
+        cascade="all, delete-orphan",
+        order_by="PerformanceLogPhoto.created_at",
     )
 
     __table_args__ = (
@@ -487,5 +540,58 @@ class CarPhoto(Base):
     )
 
     car: Mapped["Car"] = relationship(
+        back_populates="photos",
+    )
+
+
+class PerformanceLogPhoto(Base):
+    __tablename__ = "performance_log_photos"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+
+    performance_log_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("performance_logs.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    original_filename: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
+    )
+
+    storage_path: Mapped[str] = mapped_column(
+        String(500),
+        nullable=False,
+        unique=True,
+    )
+
+    url_path: Mapped[str] = mapped_column(
+        String(500),
+        nullable=False,
+    )
+
+    content_type: Mapped[str] = mapped_column(
+        String(100),
+        nullable=False,
+    )
+
+    size_bytes: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+    )
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False,
+    )
+
+    performance_log: Mapped["PerformanceLog"] = relationship(
         back_populates="photos",
     )

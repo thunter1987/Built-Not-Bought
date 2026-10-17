@@ -7,15 +7,17 @@ import CarForm from '../components/cars/CarForm'
 import Badge from '../components/ui/Badge'
 import StatTile from '../components/ui/StatTile'
 import BuildSheet from '../components/modifications/BuildSheet'
+import SessionList from '../components/sessions/SessionList'
 import { api } from '../lib/api'
 import { formatLapTime, humanizeEnum, powerToWeight } from '../lib/format'
 import type { Car, CarPayload, CarPhoto } from '../lib/types'
 
-type Tab = 'overview' | 'build-sheet' | 'photos' | 'specs'
+type Tab = 'overview' | 'build-sheet' | 'sessions' | 'photos' | 'specs'
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'overview', label: 'Overview' },
   { id: 'build-sheet', label: 'Build Sheet' },
+  { id: 'sessions', label: 'Sessions' },
   { id: 'photos', label: 'Photo Gallery' },
   { id: 'specs', label: 'Spec Sheet' },
 ]
@@ -356,6 +358,13 @@ export default function CarDetailPage() {
         </section>
       ) : null}
 
+      {/* Sessions */}
+      {tab === 'sessions' ? (
+        <section className='mt-6'>
+          <SessionList carId={car.id} />
+        </section>
+      ) : null}
+
       {/* Photos */}
       {tab === 'photos' ? (
         <section className='mt-6'>
@@ -411,7 +420,7 @@ export default function CarDetailPage() {
                     </span>
 
                     <button
-                      className='btn btn-danger !px-3 !py-1.5 !text-xs'
+                      className='btn btn-danger px-3! py-1.5! text-xs!'
                       onClick={() => deletePhoto.mutate(photo.id)}
                       disabled={deletePhoto.isPending}
                     >
@@ -443,7 +452,7 @@ export default function CarDetailPage() {
             </h2>
 
             <button
-              className='btn btn-secondary !py-2 !text-xs'
+              className='btn btn-secondary py-2! text-xs!'
               onClick={() => setEditing(true)}
             >
               Edit specs

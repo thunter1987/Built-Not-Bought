@@ -7,6 +7,7 @@ from app.models import (
     CarStatus,
     Drivetrain,
     Transmission,
+    PerformanceLogType,
     MODIFICATION_CATEGORIES,
     MODIFICATION_PURPOSES,
 )
@@ -292,6 +293,119 @@ class ModificationOut(BaseModel):
     installed_at: Optional[date]
     notes: Optional[str]
     created_at: datetime
+
+    model_config = ConfigDict(
+        from_attributes=True,
+    )
+
+
+class PerformanceLogCreate(BaseModel):
+    log_type: PerformanceLogType
+    occurred_at: Optional[datetime] = None
+
+    # Results
+    horsepower: Optional[float] = Field(default=None, ge=0, le=10000)
+    torque_lbft: Optional[float] = Field(default=None, ge=0, le=10000)
+    zero_to_sixty_sec: Optional[float] = Field(default=None, ge=0, le=30)
+    quarter_mile_sec: Optional[float] = Field(default=None, ge=0, le=30)
+    quarter_mile_mph: Optional[float] = Field(default=None, ge=0, le=300)
+    sixty_to_zero_ft: Optional[float] = Field(default=None, ge=0, le=500)
+    lap_time_sec: Optional[float] = Field(default=None, ge=0, le=600)
+
+    # Conditions
+    temperature_f: Optional[int] = Field(default=None, ge=-50, le=150)
+    humidity_percent: Optional[int] = Field(default=None, ge=0, le=100)
+    fuel_octane: Optional[int] = Field(default=None, ge=85, le=120)
+    tire_setup: Optional[str] = Field(default=None, max_length=200)
+    tire_pressure_front_psi: Optional[float] = Field(default=None, ge=0, le=100)
+    tire_pressure_rear_psi: Optional[float] = Field(default=None, ge=0, le=100)
+
+    # Location
+    location: Optional[str] = Field(default=None, max_length=160)
+    track_name: Optional[str] = Field(default=None, max_length=160)
+    track_layout: Optional[str] = Field(default=None, max_length=80)
+
+    notes: Optional[str] = Field(default=None, max_length=5000)
+    data: dict = Field(default_factory=dict)
+
+
+class PerformanceLogUpdate(BaseModel):
+    log_type: Optional[PerformanceLogType] = None
+    occurred_at: Optional[datetime] = None
+
+    # Results
+    horsepower: Optional[float] = Field(default=None, ge=0, le=10000)
+    torque_lbft: Optional[float] = Field(default=None, ge=0, le=10000)
+    zero_to_sixty_sec: Optional[float] = Field(default=None, ge=0, le=30)
+    quarter_mile_sec: Optional[float] = Field(default=None, ge=0, le=30)
+    quarter_mile_mph: Optional[float] = Field(default=None, ge=0, le=300)
+    sixty_to_zero_ft: Optional[float] = Field(default=None, ge=0, le=500)
+    lap_time_sec: Optional[float] = Field(default=None, ge=0, le=600)
+
+    # Conditions
+    temperature_f: Optional[int] = Field(default=None, ge=-50, le=150)
+    humidity_percent: Optional[int] = Field(default=None, ge=0, le=100)
+    fuel_octane: Optional[int] = Field(default=None, ge=85, le=120)
+    tire_setup: Optional[str] = Field(default=None, max_length=200)
+    tire_pressure_front_psi: Optional[float] = Field(default=None, ge=0, le=100)
+    tire_pressure_rear_psi: Optional[float] = Field(default=None, ge=0, le=100)
+
+    # Location
+    location: Optional[str] = Field(default=None, max_length=160)
+    track_name: Optional[str] = Field(default=None, max_length=160)
+    track_layout: Optional[str] = Field(default=None, max_length=80)
+
+    notes: Optional[str] = Field(default=None, max_length=5000)
+    data: Optional[dict] = None
+
+
+class PerformanceLogPhotoOut(BaseModel):
+    id: UUID
+    performance_log_id: UUID
+    original_filename: str
+    url_path: str
+    content_type: str
+    size_bytes: int
+    created_at: datetime
+
+    model_config = ConfigDict(
+        from_attributes=True,
+    )
+
+
+class PerformanceLogOut(BaseModel):
+    id: UUID
+    car_id: UUID
+    log_type: PerformanceLogType
+    occurred_at: datetime
+
+    # Results
+    horsepower: Optional[float]
+    torque_lbft: Optional[float]
+    zero_to_sixty_sec: Optional[float]
+    quarter_mile_sec: Optional[float]
+    quarter_mile_mph: Optional[float]
+    sixty_to_zero_ft: Optional[float]
+    lap_time_sec: Optional[float]
+
+    # Conditions
+    temperature_f: Optional[int]
+    humidity_percent: Optional[int]
+    fuel_octane: Optional[int]
+    tire_setup: Optional[str]
+    tire_pressure_front_psi: Optional[float]
+    tire_pressure_rear_psi: Optional[float]
+
+    # Location
+    location: Optional[str]
+    track_name: Optional[str]
+    track_layout: Optional[str]
+
+    notes: Optional[str]
+    data: dict
+    created_at: datetime
+
+    photos: list[PerformanceLogPhotoOut] = []
 
     model_config = ConfigDict(
         from_attributes=True,
