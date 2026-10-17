@@ -1,8 +1,9 @@
+import logging
 import shutil
 from pathlib import Path
 from uuid import UUID
-from fastapi import APIRouter, Depends, HTTPException, Response, status
-from sqlalchemy import select
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Response, status
+from sqlalchemy import delete, select
 from sqlalchemy.orm import Session, selectinload
 from app.config import settings
 from app.database import get_db
@@ -14,6 +15,8 @@ router = APIRouter(
     prefix="/cars",
     tags=["cars"],
 )
+
+logger = logging.getLogger(__name__)
 
 
 def get_owned_car_or_404(
@@ -35,6 +38,17 @@ def get_owned_car_or_404(
         )
 
     return car
+
+
+def cleanup_car_photos(directory: Path) -> None:
+    try:
+        if directory.is_dir():
+            shutil.rmtree(directory)
+    except OSError as e:
+        # Log the error. The request has already succeeded, so we just record the failure.
+        logger.error(
+            "Failed to remove car photo directory %s", directory, exc_info=True
+        ),  # type: ignore
 
 
 @router.post(
@@ -81,14 +95,14 @@ def list_cars(
 def get_car(
     car_id: UUID,
     db: Session = Depends(get_db),
-    curremt_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
 ):
     car = db.scalar(
         select(Car)
         .options(selectinload(Car.photos))
         .where(
             Car.id == car_id,
-            Car.owner_id == curremt_user.id,
+            Car.owner_id == current_user.id,
         )
     )
     if car is None:
@@ -135,31 +149,33 @@ def update_car(
 )
 def delete_car(
     car_id: UUID,
+    background_tasks: BackgroundTasks,  # Inject FastAPI's BackgroundTasks
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
     car = db.scalar(
-        select(Car)
-        .options(selectinload(Car.photos))
-        .where(
+        select(Car).where(
             Car.id == car_id,
             Car.owner_id == current_user.id,
         )
     )
+
     if car is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Car not found",
         )
+
     car_photo_directory = Path(settings.upload_dir) / "cars" / str(car.id)
+
+    for photo in car.photos:
+        if photo.car_id == car.id:
+            db.delete(photo)
 
     db.delete(car)
     db.commit()
 
-    shutil.rmtree(
-        car_photo_directory,
-        ignore_errors=True,
-    )
+    background_tasks.add_task(cleanup_car_photos, car_photo_directory)
 
     return Response(
         status_code=status.HTTP_204_NO_CONTENT,

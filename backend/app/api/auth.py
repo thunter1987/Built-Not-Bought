@@ -5,11 +5,13 @@ from app.schemas import Token, UserCreate, UserLogin, UserOut
 from app.security import (
     create_access_token,
     hash_password,
+    DUMMY_HASH,
     password_needs_rehash,
     verify_password,
 )
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 router = APIRouter(
@@ -51,7 +53,14 @@ def register(
     )
 
     db.add(user)
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Email or username already registered",
+        ) from e
     db.refresh(user)
 
     return user
@@ -66,13 +75,16 @@ def login(payload: UserLogin, db: Session = Depends(get_db)):
 
     user = db.scalar(select(User).where(User.email == email))
 
+    password_hash = user.hashed_password if user else DUMMY_HASH
+
     if user is None or not verify_password(
         payload.password,
-        user.hashed_password,
+        password_hash,
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
         )
 
     if password_needs_rehash(user.hashed_password):

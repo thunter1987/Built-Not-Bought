@@ -63,7 +63,10 @@ def list_modifications(
     statement = (
         select(Modification)
         .where(Modification.car_id == car.id)
-        .order_by(Modification.installed_at.desc(), Modification.created_at.desc())
+        .order_by(
+            Modification.installed_at.desc().nulls_last(),
+            Modification.created_at.desc(),
+        )
     )
 
     return db.scalars(statement).all()

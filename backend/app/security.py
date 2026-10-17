@@ -11,6 +11,7 @@ from app.config import settings
 ALGORITHM = "HS256"
 
 ph = PasswordHasher()
+DUMMY_HASH = ph.hash("$2b$12$LJ3m4ys3Lg0K8zZvQrQvXe.3zZvQrQvXe.3zZvQrQvXe.3zZvQr")
 
 
 def hash_password(password: str) -> str:

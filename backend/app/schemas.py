@@ -153,7 +153,7 @@ class CarPhotoOut(BaseModel):
     original_filename: str
     url_path: str
     content_type: str
-    size_bytes: str
+    size_bytes: int
     created_at: datetime
 
     model_config = ConfigDict(
