@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-
+import VehicleSelector from './VehicleSelector'
 import type { Car, CarPayload } from '../../lib/types'
 
 const STATUSES = ['PROJECT', 'STREET', 'TRACK', 'SHOW', 'SOLD']
@@ -161,129 +161,87 @@ export default function CarForm({
 
       {/* Identity */}
       <section>
-        <SectionTitle>Build identity</SectionTitle>
+        {' '}
+        {/* Vehicle selector */}
+        <VehicleSelector
+          year={form.year}
+          make={form.make}
+          model={form.model}
+          trim={form.trim}
+          onYearChange={value => update('year', value)}
+          onMakeChange={value => update('make', value)}
+          onModelChange={value => update('model', value)}
+          onTrimChange={value => update('trim', value)}
+        />
+        {/* Build identity */}
+        <section>
+          <SectionTitle>Build identity</SectionTitle>
 
-        <div className='grid grid-cols-2 gap-4 sm:grid-cols-4'>
-          <div>
-            <label className='field-label' htmlFor='year'>
-              Year
-            </label>
-            <input
-              id='year'
-              className='field-input'
-              type='number'
-              min='1900'
-              max='2100'
-              value={form.year}
-              onChange={e => update('year', e.target.value)}
-              required
-            />
-          </div>
+          <div className='grid grid-cols-2 gap-4 sm:grid-cols-4'>
+            <div>
+              <label className='field-label' htmlFor='nickname'>
+                Build name
+              </label>
+              <input
+                id='nickname'
+                className='field-input'
+                placeholder='Project Supra'
+                value={form.nickname}
+                onChange={e => update('nickname', e.target.value)}
+              />
+            </div>
 
-          <div>
-            <label className='field-label' htmlFor='make'>
-              Make
-            </label>
-            <input
-              id='make'
-              className='field-input'
-              placeholder='Toyota'
-              value={form.make}
-              onChange={e => update('make', e.target.value)}
-              required
-            />
-          </div>
+            <div>
+              <label className='field-label' htmlFor='status'>
+                Status
+              </label>
+              <select
+                id='status'
+                className='field-input'
+                value={form.status}
+                onChange={e => update('status', e.target.value)}
+              >
+                {STATUSES.map(value => (
+                  <option key={value} value={value}>
+                    {value.replace('_', ' ')}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div>
-            <label className='field-label' htmlFor='model'>
-              Model
-            </label>
-            <input
-              id='model'
-              className='field-input'
-              placeholder='GR Supra'
-              value={form.model}
-              onChange={e => update('model', e.target.value)}
-              required
-            />
-          </div>
+            <div>
+              <label className='field-label' htmlFor='discipline'>
+                Discipline
+              </label>
+              <select
+                id='discipline'
+                className='field-input'
+                value={form.discipline}
+                onChange={e => update('discipline', e.target.value)}
+              >
+                <option value=''>Not set</option>
+                {DISCIPLINES.map(value => (
+                  <option key={value} value={value}>
+                    {value.replace('_', ' ')}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div>
-            <label className='field-label' htmlFor='nickname'>
-              Build name
-            </label>
-            <input
-              id='nickname'
-              className='field-input'
-              placeholder='Project Supra'
-              value={form.nickname}
-              onChange={e => update('nickname', e.target.value)}
-            />
+            <div>
+              <label className='field-label' htmlFor='engine_code'>
+                Engine code
+              </label>
+              <input
+                id='engine_code'
+                className='field-input'
+                placeholder='B58'
+                value={form.engine_code}
+                onChange={e => update('engine_code', e.target.value)}
+              />
+            </div>
           </div>
-
-          <div>
-            <label className='field-label' htmlFor='status'>
-              Status
-            </label>
-            <select
-              id='status'
-              className='field-input'
-              value={form.status}
-              onChange={e => update('status', e.target.value)}
-            >
-              {STATUSES.map(value => (
-                <option key={value} value={value}>
-                  {value.replace('_', ' ')}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className='field-label' htmlFor='discipline'>
-              Discipline
-            </label>
-            <select
-              id='discipline'
-              className='field-input'
-              value={form.discipline}
-              onChange={e => update('discipline', e.target.value)}
-            >
-              <option value=''>Not set</option>
-              {DISCIPLINES.map(value => (
-                <option key={value} value={value}>
-                  {value.replace('_', ' ')}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className='field-label' htmlFor='trim'>
-              Trim
-            </label>
-            <input
-              id='trim'
-              className='field-input'
-              placeholder='3.0 Premium'
-              value={form.trim}
-              onChange={e => update('trim', e.target.value)}
-            />
-          </div>
-
-          <div>
-            <label className='field-label' htmlFor='engine_code'>
-              Engine code
-            </label>
-            <input
-              id='engine_code'
-              className='field-input'
-              placeholder='B58'
-              value={form.engine_code}
-              onChange={e => update('engine_code', e.target.value)}
-            />
-          </div>
-        </div>
+        </section>
       </section>
 
       {/* Baseline specs */}

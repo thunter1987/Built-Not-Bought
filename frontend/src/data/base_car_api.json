@@ -15896,7 +15896,6 @@
             "2022 Camaro SS 2dr Convertible w/2SS (6.2L 8cyl 6M)",
             "2022 Camaro SS 2dr Coupe w/1SS (6.2L 8cyl 6M)",
             "2022 Camaro SS 2dr Coupe w/2SS (6.2L 8cyl 6M)",
-            "2022 Camaro Z/28 2dr Coupe (7.0L 8cyl 6M)",
             "2022 Camaro ZL1 2dr Convertible (6.2L 8cyl S/C 6M)",
             "2022 Camaro ZL1 2dr Coupe (6.2L 8cyl S/C 6M)",
             "2021 Camaro LS 2dr Coupe w/1LS (3.6L 6cyl 6M)",
@@ -15909,7 +15908,6 @@
             "2021 Camaro SS 2dr Convertible w/2SS (6.2L 8cyl 6M)",
             "2021 Camaro SS 2dr Coupe w/1SS (6.2L 8cyl 6M)",
             "2021 Camaro SS 2dr Coupe w/2SS (6.2L 8cyl 6M)",
-            "2021 Camaro Z/28 2dr Coupe (7.0L 8cyl 6M)",
             "2021 Camaro ZL1 2dr Convertible (6.2L 8cyl S/C 6M)",
             "2021 Camaro ZL1 2dr Coupe (6.2L 8cyl S/C 6M)",
             "2020 Camaro LS 2dr Coupe w/1LS (3.6L 6cyl 6M)",
@@ -15922,7 +15920,6 @@
             "2020 Camaro SS 2dr Convertible w/2SS (6.2L 8cyl 6M)",
             "2020 Camaro SS 2dr Coupe w/1SS (6.2L 8cyl 6M)",
             "2020 Camaro SS 2dr Coupe w/2SS (6.2L 8cyl 6M)",
-            "2020 Camaro Z/28 2dr Coupe (7.0L 8cyl 6M)",
             "2020 Camaro ZL1 2dr Convertible (6.2L 8cyl S/C 6M)",
             "2020 Camaro ZL1 2dr Coupe (6.2L 8cyl S/C 6M)",
             "2019 Camaro LS 2dr Coupe w/1LS (3.6L 6cyl 6M)",
@@ -15935,7 +15932,6 @@
             "2019 Camaro SS 2dr Convertible w/2SS (6.2L 8cyl 6M)",
             "2019 Camaro SS 2dr Coupe w/1SS (6.2L 8cyl 6M)",
             "2019 Camaro SS 2dr Coupe w/2SS (6.2L 8cyl 6M)",
-            "2019 Camaro Z/28 2dr Coupe (7.0L 8cyl 6M)",
             "2019 Camaro ZL1 2dr Convertible (6.2L 8cyl S/C 6M)",
             "2019 Camaro ZL1 2dr Coupe (6.2L 8cyl S/C 6M)",
             "2018 Camaro LS 2dr Coupe w/1LS (3.6L 6cyl 6M)",
@@ -15948,7 +15944,6 @@
             "2018 Camaro SS 2dr Convertible w/2SS (6.2L 8cyl 6M)",
             "2018 Camaro SS 2dr Coupe w/1SS (6.2L 8cyl 6M)",
             "2018 Camaro SS 2dr Coupe w/2SS (6.2L 8cyl 6M)",
-            "2018 Camaro Z/28 2dr Coupe (7.0L 8cyl 6M)",
             "2018 Camaro ZL1 2dr Convertible (6.2L 8cyl S/C 6M)",
             "2018 Camaro ZL1 2dr Coupe (6.2L 8cyl S/C 6M)",
             "2017 Camaro LS 2dr Coupe w/1LS (3.6L 6cyl 6M)",
@@ -15961,7 +15956,6 @@
             "2017 Camaro SS 2dr Convertible w/2SS (6.2L 8cyl 6M)",
             "2017 Camaro SS 2dr Coupe w/1SS (6.2L 8cyl 6M)",
             "2017 Camaro SS 2dr Coupe w/2SS (6.2L 8cyl 6M)",
-            "2017 Camaro Z/28 2dr Coupe (7.0L 8cyl 6M)",
             "2017 Camaro ZL1 2dr Convertible (6.2L 8cyl S/C 6M)",
             "2017 Camaro ZL1 2dr Coupe (6.2L 8cyl S/C 6M)",
             "2016 Camaro LS 2dr Coupe w/1LS (3.6L 6cyl 6M)",
@@ -15974,7 +15968,6 @@
             "2016 Camaro SS 2dr Convertible w/2SS (6.2L 8cyl 6M)",
             "2016 Camaro SS 2dr Coupe w/1SS (6.2L 8cyl 6M)",
             "2016 Camaro SS 2dr Coupe w/2SS (6.2L 8cyl 6M)",
-            "2016 Camaro Z/28 2dr Coupe (7.0L 8cyl 6M)",
             "2016 Camaro ZL1 2dr Convertible (6.2L 8cyl S/C 6M)",
             "2016 Camaro ZL1 2dr Coupe (6.2L 8cyl S/C 6M)",
             "2015 Camaro LS 2dr Coupe w/1LS (3.6L 6cyl 6M)",
@@ -34058,6 +34051,14 @@
           ]
         },
         {
+          "name": "Focus RS",
+          "trims": [
+            "2016 Focus RS 4dr Sedan (2.3L 4cyl Turbo 6M)",
+            "2017 Focus RS 4dr Sedan (2.3L 4cyl Turbo 6M)",
+            "2018 Focus RS 4dr Sedan (2.3L 4cyl Turbo 6M)"
+          ]
+        },
+        {
           "name": "Focus ST",
           "trims": [
             "2022 Focus ST 4dr Hatchback w/EcoBoost (2.0L 4cyl Turbo 6M)",
@@ -34980,6 +34981,7 @@
             "2022 Mustang EcoBoost Premium 2dr Convertible (2.3L 4cyl Turbo 6M)",
             "2022 Mustang EcoBoost Premium 2dr Coupe (2.3L 4cyl Turbo 6M)",
             "2022 Mustang GT 2dr Coupe (5.0L 8cyl 6M)",
+            "2022 Mustang Mach 1 2dr Coupe (5.0L 8cyl 6M)",
             "2022 Mustang GT 50 Years Limited Edition 2dr Coupe (5.0L 8cyl 6M)",
             "2022 Mustang GT Premium 2dr Convertible (5.0L 8cyl 6M)",
             "2022 Mustang GT Premium 2dr Coupe (5.0L 8cyl 6M)",
@@ -35001,6 +35003,8 @@
             "2020 Mustang GT 50 Years Limited Edition 2dr Coupe (5.0L 8cyl 6M)",
             "2020 Mustang GT Premium 2dr Convertible (5.0L 8cyl 6M)",
             "2020 Mustang GT Premium 2dr Coupe (5.0L 8cyl 6M)",
+            "2020 Mustang Shelby GT500 2dr Coupe (5.2L 8cyl 7AM)",
+            "2020 Mustang Bullitt 2dr Coupe (5.0L 8cyl 6M)",
             "2020 Mustang V6 2dr Convertible (3.7L 6cyl 6M)",
             "2020 Mustang V6 2dr Coupe (3.7L 6cyl 6M)",
             "2019 Mustang EcoBoost 2dr Coupe (2.3L 4cyl Turbo 6M)",
@@ -35019,6 +35023,7 @@
             "2018 Mustang GT 50 Years Limited Edition 2dr Coupe (5.0L 8cyl 6M)",
             "2018 Mustang GT Premium 2dr Convertible (5.0L 8cyl 6M)",
             "2018 Mustang GT Premium 2dr Coupe (5.0L 8cyl 6M)",
+            "2018 Mustang GT 2dr Coupe (5.0L 8cyl 10A)",
             "2018 Mustang V6 2dr Convertible (3.7L 6cyl 6M)",
             "2018 Mustang V6 2dr Coupe (3.7L 6cyl 6M)",
             "2017 Mustang EcoBoost 2dr Coupe (2.3L 4cyl Turbo 6M)",
@@ -41239,6 +41244,14 @@
           ]
         },
         {
+          "name": "Civic Type R",
+          "trims": [
+            "2017 Civic Type R 4dr Hatchback (2.0L 4cyl Turbo 6M)",
+            "2020 Civic Type R 4dr Hatchback (2.0L 4cyl Turbo 6M)",
+            "2023 Civic Type R 4dr Hatchback (2.0L 4cyl Turbo 6M)"
+          ]
+        },
+        {
           "name": "Concerto",
           "trims": [
             "1994 Concerto 1.5",
@@ -42670,19 +42683,34 @@
             "2009 S2000 Ultimate",
             "2008 S2000",
             "2008 S2000 2.0 VTec",
-            "2008 S2000 Convertible",
+            "2008 S2000 2dr Convertible (2.2L 4cyl 6M)",
+            "2008 S2000 2dr Convertible (2.2L 4cyl Auto)",
             "2008 S2000 CR",
             "2007 S2000",
             "2007 S2000 2.0 Vtec",
             "2007 S2000 2.2",
             "2006 S2000",
             "2005 S2000",
+            "2004 S2000 2dr Convertible (2.2L 4cyl 6M)",
+            "2004 S2000 2dr Convertible (2.2L 4cyl Auto)",
             "2004 S2000",
+            "2003 S2000 2dr Convertible (2.2L 4cyl 6M)",
+            "2003 S2000 2dr Convertible (2.2L 4cyl Auto)",
             "2003 S2000",
+            "2002 S2000 2dr Convertible (2.2L 4cyl 6M)",
+            "2002 S2000 2dr Convertible (2.2L 4cyl Auto)",
             "2002 S2000",
+            "2001 S2000 2dr Convertible (2.2L 4cyl 6M)",
+            "2001 S2000 2dr Convertible (2.2L 4cyl Auto)",
             "2001 S2000",
+            "2000 S2000 2dr Convertible (2.0L 4cyl 6M)",
+            "2000 S2000 2dr Convertible (2.2L 4cyl Auto)",
             "2000 S2000",
+            "1999 S2000 2dr Convertible (2.0L 4cyl 6M)",
+            "1999 S2000 2dr Convertible (2.2L 4cyl Auto)",
             "1999 S2000",
+            "1998 S2000 2dr Convertible (2.0L 4cyl 6M)",
+            "1998 S2000 2dr Convertible (2.2L 4cyl Auto)",
             "1998 S2000"
           ]
         },
@@ -87053,6 +87081,16 @@
           "trims": [
             "2002 FXS",
             "2001 FXS"
+          ]
+        },
+        {
+          "name": "GR Supra",
+          "trims": [
+            "2020 GR Supra 3.0 2dr Coupe (3.0L 6cyl Turbo 8A)",
+            "2020 GR Supra 3.0 Premium 2dr Coupe (3.0L 6cyl Turbo 8A)",
+            "2021 GR Supra 2.0 2dr Coupe (2.0L 4cyl Turbo 8A)",
+            "2021 GR Supra 3.0 2dr Coupe (3.0L 6cyl Turbo 8A)",
+            "2023 GR Supra A91-MT Edition 2dr Coupe (3.0L 6cyl Turbo 6M)"
           ]
         },
         {
